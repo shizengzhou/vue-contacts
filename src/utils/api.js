@@ -1,4 +1,4 @@
-const api = 'localhost:5001';
+const api = 'http://localhost:5001';
 
 let token = localStorage.token;
 if (!token) {
@@ -6,17 +6,18 @@ if (!token) {
 }
 
 const headers = {
-  Accept: 'application/json'
+  Accept: 'application/json',
+  Authorization: token
 };
 
 export const getAll = () => {
-  fetch(`${api}/contacts`, { headers })
+  return fetch(`${api}/contacts`, { headers })
     .then(response => response.json())
-    .then(response => response.contacts);
+    .then(response => response);
 }
 
 export const add = contact => {
-  fetch(`${api}/contacts`, {
+  return fetch(`${api}/contacts`, {
     method: 'post',
     headers: {
       ...headers,
@@ -27,7 +28,7 @@ export const add = contact => {
 }
 
 export const remove = id => {
-  fetch(`${api}/contact/${id}`, {
+  return fetch(`${api}/contact/${id}`, {
     method: 'delete',
     headers
   }).then(response => response.json()).then(response => response.contact);
