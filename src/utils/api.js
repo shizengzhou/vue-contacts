@@ -10,14 +10,13 @@ const headers = {
   Authorization: token
 };
 
-export const getAll = () => {
-  return fetch(`${api}/contacts`, { headers })
+export const getAll = () =>
+  fetch(`${api}/contacts`, { headers })
     .then(response => response.json())
     .then(response => response);
-}
 
-export const add = contact => {
-  return fetch(`${api}/contacts`, {
+export const add = contact =>
+  fetch(`${api}/contacts`, {
     method: 'post',
     headers: {
       ...headers,
@@ -25,11 +24,9 @@ export const add = contact => {
     },
     body: JSON.stringify(contact)
   }).then(response => response.json());
-}
 
-export const remove = id => {
-  return fetch(`${api}/contact/${id}`, {
+export const remove = id =>
+  fetch(`${api}/contacts/${id}`, {
     method: 'delete',
     headers
   }).then(response => response.json()).then(response => response.contact);
-}
