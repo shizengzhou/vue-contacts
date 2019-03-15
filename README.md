@@ -1,29 +1,14 @@
 # vue-contacts
+练习 Vue 和 Vue Router 的小 demo
 
-## Project setup
-```
-npm install
-```
+## 运行 Server
+- `git clone https://github.com/udacity/reactnd-contacts-server.git`
+- `cd reactnd-contacts-server`
+- `npm install`
+- `node server.js`
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 运行项目
+- `npm install`
+- `npm run serve`
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+注：在 Terminal 中使用 git 提交带有反引号的信息时，反引号中的内容似乎被过滤了，在 VS Code 中提交则无此问题。
