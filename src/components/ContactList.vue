@@ -110,12 +110,17 @@ export default {
 }
 
 .contact {
-  margin: 20px 20px 0 20px;
   padding: 20px;
   display: flex;
   background-color: #fff;
   border: 1px solid #d5d8de;
-  border-radius: 4px;
+}
+
+@media (min-width: 600px) {
+  .contact {
+    margin: 20px 20px 0 20px;
+    border-radius: 4px;
+  }
 }
 
 .contact-avatar {
@@ -132,6 +137,12 @@ export default {
   padding-left: 20px;
   border-left: 1px solid #eee;
   flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.contact-content p {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .contact-remove {
@@ -142,6 +153,9 @@ export default {
   outline: 0;
   align-self: center;
   cursor: pointer;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+  background-color: #fff;
 }
 
 .contact-count {

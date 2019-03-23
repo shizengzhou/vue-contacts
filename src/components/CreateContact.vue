@@ -50,6 +50,7 @@ export default {
   max-width: 500px;
   margin: 0 auto;
   display: flex;
+  padding: 0 20px;
 }
 
 .create-contact-avatar {
