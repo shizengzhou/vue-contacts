@@ -33,41 +33,69 @@
 </template>
 
 <script>
+import { value, onCreated, watch } from 'vue-function-api';
 import escapeStringRegexp from 'escape-string-regexp';
 import * as API from '../utils/api.js';
 
-export default {
-  data: function () {
+const useContacts = (query) => {
+  const contacts = value([]);
+  const showingContacts = value([]);
+
+  onCreated(() => {
+      API.getAll().then(response => {
+        contacts.value = response.contacts
+        showingContacts.value = response.contacts
+      });
+    });
+
+    watch(
+      () => {
+        const match = new RegExp(escapeStringRegexp(query.value), 'i');
+        showingContacts.value = contacts.value.filter(
+          contact => match.test(contact.name)
+        );
+      },
+      () => { /* noop */}
+    );
+
+    const removeContact = id => {
+      contacts.value = contacts.value.filter(contact => contact.id !== id);
+      showingContacts.value = contacts.value;
+      API.remove(id);
+    };
+
     return {
-      contacts: [],
-      showingContacts: [],
-      query: ''
+      contacts,
+      showingContacts,
+      removeContact
+    };
+};
+
+const useQuery = () => {
+  const query = value('');
+
+  const showAll = () => {
+    query.value = ''
+  };
+
+  return {
+    query,
+    showAll
+  };
+}
+
+export default {
+  setup() {
+    const { query, showAll } = useQuery();
+    const { contacts, showingContacts, removeContact } = useContacts(query);
+    return {
+      query,
+      showAll,
+      contacts,
+      showingContacts,
+      removeContact
     };
   },
-  created: function () {
-    API.getAll().then(response => {
-      this.contacts = response.contacts;
-      this.showingContacts = response.contacts;
-    });
-  },
-  watch: {
-    query: function () {
-      const match = new RegExp(escapeStringRegexp(this.query), 'i');
-      this.showingContacts = this.contacts.filter(
-        contact => match.test(contact.name)
-      );
-    }
-  },
-  methods: {
-    removeContact: function (id) {
-      this.contacts = this.contacts.filter(contact => contact.id !== id);
-      this.showingContacts = this.contacts;
-      API.remove(id);
-    },
-    showAll: function () {
-      this.query = '';
-    }
-  }
 };
 </script>
 
