@@ -45,10 +45,9 @@ export default {
     };
   },
   created: function () {
-    const vm = this;
     API.getAll().then(response => {
-      vm.contacts = response.contacts;
-      vm.showingContacts = response.contacts;
+      this.contacts = response.contacts;
+      this.showingContacts = response.contacts;
     });
   },
   watch: {
