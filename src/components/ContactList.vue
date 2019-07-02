@@ -70,9 +70,9 @@ const useQuery = (contacts, showingContacts) => {
 
   watch(query, val => {
     const match = new RegExp(escapeStringRegexp(val), 'i');
-      showingContacts.value = contacts.value.filter(
-        contact => match.test(contact.name)
-      );
+    showingContacts.value = contacts.value.filter(
+      contact => match.test(contact.name)
+    );
   });
 
   return {
