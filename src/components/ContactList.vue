@@ -37,7 +37,7 @@ import { value, onCreated, watch } from 'vue-function-api';
 import escapeStringRegexp from 'escape-string-regexp';
 import * as API from '../utils/api.js';
 
-const useContacts = (query) => {
+const useContacts = () => {
   const contacts = value([]);
   const showingContacts = value([]);
 
@@ -47,16 +47,6 @@ const useContacts = (query) => {
         showingContacts.value = response.contacts
       });
     });
-
-    watch(
-      () => {
-        const match = new RegExp(escapeStringRegexp(query.value), 'i');
-        showingContacts.value = contacts.value.filter(
-          contact => match.test(contact.name)
-        );
-      },
-      () => { /* noop */}
-    );
 
     const removeContact = id => {
       contacts.value = contacts.value.filter(contact => contact.id !== id);
@@ -71,12 +61,19 @@ const useContacts = (query) => {
     };
 };
 
-const useQuery = () => {
+const useQuery = (contacts, showingContacts) => {
   const query = value('');
 
   const showAll = () => {
     query.value = ''
   };
+
+  watch(query, val => {
+    const match = new RegExp(escapeStringRegexp(val), 'i');
+      showingContacts.value = contacts.value.filter(
+        contact => match.test(contact.name)
+      );
+  });
 
   return {
     query,
@@ -86,8 +83,8 @@ const useQuery = () => {
 
 export default {
   setup() {
-    const { query, showAll } = useQuery();
-    const { contacts, showingContacts, removeContact } = useContacts(query);
+    const { contacts, showingContacts, removeContact } = useContacts();
+    const { query, showAll } = useQuery(contacts, showingContacts);
     return {
       query,
       showAll,
